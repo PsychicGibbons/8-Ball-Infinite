@@ -4,9 +4,10 @@ public class playerController : MonoBehaviour
 {
     private Vector3 mouseInputPos;
     private Vector3 mouseReleasePos;
-    private Vector3 dragPath;
+    private Vector2 dragPath;
     private bool dragging = false;
-    private float ballSpeed = 2f; // in future make it so ballspeed is dependent on dragpath.magnitude
+    private float ballSpeed = 20f; // in future make it so ballspeed is dependent on dragpath.magnitude
+    private bool dragged = false;
 
     private Rigidbody rb;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -16,11 +17,18 @@ public class playerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-        Movement();
+        MovementCheck();
     }
-    private void Movement()
+    private void FixedUpdate()
+    {
+        if (dragged)
+        {
+            ApplyMovement();
+        }  
+    }
+    private void MovementCheck()
     {
         if (Input.GetMouseButtonDown(0) && !dragging)
         {
@@ -31,9 +39,14 @@ public class playerController : MonoBehaviour
         {
             dragging = false;
             mouseReleasePos = Input.mousePosition;
-
-            dragPath = mouseReleasePos - mouseInputPos;
-            rb.AddForce(dragPath.normalized * ballSpeed, ForceMode.Impulse);
+            dragged = true;
         }
+    }
+    private void ApplyMovement()
+    {
+        dragged = false;
+        dragPath = mouseReleasePos - mouseInputPos;
+        Vector3 force = new Vector3(dragPath.x, 0, dragPath.y);
+        rb.AddForce(-force.normalized * ballSpeed, ForceMode.Impulse); //negative force so if backwards drag it goes forwards
     }
 }
