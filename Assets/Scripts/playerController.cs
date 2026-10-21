@@ -24,9 +24,9 @@ public class playerController : MonoBehaviour
     void Update()
     {
         MovementCheck();
-        if (rb.linearVelocity.magnitude < 1f)
+        if (rb.linearVelocity.magnitude < 1.2f)
         {
-            Vector3 cameraTargetPos = new Vector3(0, 20f, transform.position.z + 3);
+            Vector3 cameraTargetPos = new Vector3(0, 20f, transform.position.z + 8);
             if (Vector3.Distance(camera.transform.position, cameraTargetPos) > 0.05)
             {
                 cameraPanning = true;
