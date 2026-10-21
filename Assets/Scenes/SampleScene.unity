@@ -264,12 +264,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 346779667}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bbfb180fc8c72a4cbfae6b068c900c1, type: 3}
+  m_Script: {fileID: 0}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  player: {fileID: 1984215971}
 --- !u!1 &1982282255
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,7 +295,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1982282255}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: d06a06560d0355143b76b18348fccdc0, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -413,7 +412,7 @@ Rigidbody:
   m_GameObject: {fileID: 1984215971}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 1.2
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -536,6 +535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c37d14f29b24c174aa6f18e4060e61c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  camera: {fileID: 346779667}
 --- !u!1 &2059141692
 GameObject:
   m_ObjectHideFlags: 0
