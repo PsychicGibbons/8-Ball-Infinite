@@ -5,7 +5,8 @@ public class EnemyBehavior : MonoBehaviour
     private GameObject Player;
     private Rigidbody rb;
     private Vector3 jumpVector;
-    private float jumpTimer, health = 100;
+    private float jumpTimer;
+    public float health = 100;
     [SerializeField] private float detectionRadius, jumpSpeed, jumpTimeMin, jumpTimeMax;
     private bool playerDetected;
 
@@ -43,7 +44,7 @@ public class EnemyBehavior : MonoBehaviour
         //Health check and death
         if(health <= 0)
         {
-            Die()
+            Die();
         }
     }
 
@@ -65,11 +66,5 @@ public class EnemyBehavior : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, detectionRadius);    
     }
     
-    private void OnColliderEnter(Collider other)
-    {
-        if(other = Player && rb.velocity.magnitude < Player.velocity.magnitude)
-        {
-            health -= 50;
-        }
-    }
+
 }

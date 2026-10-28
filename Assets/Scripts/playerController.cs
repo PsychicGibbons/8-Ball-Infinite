@@ -6,12 +6,13 @@ public class playerController : MonoBehaviour
     private Vector3 mouseReleasePos;
     private Vector2 dragPath;
     private bool dragging = false;
-    private float ballSpeed = 30f; // in future make it so ballspeed is dependent on dragpath.magnitude
+    private float health = 100f, ballSpeed = 30f; // in future make it so ballspeed is dependent on dragpath.magnitude
     private bool dragged = false;
 
     private Rigidbody rb;
 
     public GameObject camera;
+    [SerializeField] private float damageTakenMultiplier, damageGivenMultiplier;
     private float cameraPanSpeed = 15f;
     private bool cameraPanning = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -68,6 +69,30 @@ public class playerController : MonoBehaviour
             dragPath = mouseReleasePos - mouseInputPos;
             Vector3 force = new Vector3(dragPath.x, 0, dragPath.y);
             rb.AddForce(-force.normalized * ballSpeed, ForceMode.Impulse); //negative force so if backwards drag it goes forwards
+        }
+    }
+
+    private void OnColliderEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+           Rigidbody rbEnemy = other.GetComponent<Rigidbody>();
+           EnemyBehavior enemyData = other.GetComponent<EnemyBehavior>();
+
+            if (rbEnemy.linearVelocity.magnitude > rb.linearVelocity.magnitude)
+            {
+                health -= (rbEnemy.linearVelocity.magnitude + rb.linearVelocity.magnitude) * damageTakenMultiplier;
+                Debug.Log("PHealth = " + health);
+            }
+            else if ((rbEnemy.linearVelocity.magnitude < rb.linearVelocity.magnitude))
+            {
+                enemyData.health -= (rbEnemy.linearVelocity.magnitude + rb.linearVelocity.magnitude) * damageGivenMultiplier;
+                Debug.Log("PHealth = " + enemyData.health);
+            }
+            else
+            {
+                Debug.Log("Collision with no damage set");
+            }
         }
     }
 }

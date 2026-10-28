@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8439398630220618877}
   m_Layer: 0
   m_Name: EvilBall
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,7 +122,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6683959188252239203}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 1.1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -153,7 +153,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4ca7cc67b18bcf4d9fbcd255e2375ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBehavior
-  detectionRadius: 1
-  jumpSpeed: 1
-  jumpTimeMin: 3
-  jumpTimeMax: 5
+  health: 100
+  detectionRadius: 10
+  jumpSpeed: 2
+  jumpTimeMin: 4
+  jumpTimeMax: 8
