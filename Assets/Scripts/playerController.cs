@@ -13,7 +13,7 @@ public class playerController : MonoBehaviour
     private Rigidbody rb;
 
     public GameObject camera;
-    [SerializeField] private float damageTakenMultiplier, damageGivenMultiplier;
+    [SerializeField] private float damageTakenMultiplier, damageGivenMultiplier, damageBuffer;
     private float cameraPanSpeed = 15f;
     private bool cameraPanning = false;
     private float minCamDistanceZ = 10f;
@@ -105,15 +105,19 @@ public class playerController : MonoBehaviour
             Rigidbody rbEnemy = other.gameObject.GetComponent<Rigidbody>();
             EnemyBehavior enemyData = other.gameObject.GetComponent<EnemyBehavior>();
 
-            clashDmg = rb.linearVelocity.magnitude + rbEnemy.linearVelocity.magnitude;
+            clashDmg = rb.linearVelocity.magnitude + rbEnemy.linearVelocity.magnitude; // The combined speed of the player and the enemy
+            //Because the data is gathered after the collision, thanks to Newton the speed of the enemy and player are essentially swapped
 
-            if(clashDmg - rb.linearVelocity.magnitude > 0)
+
+            //these if statements are to make sure the damage doesn't go negative and heal the enemy / player,
+            //buffer stops the moving party from taking damage if hitting the other, if they are almost motionless
+            if (clashDmg - rb.linearVelocity.magnitude > damageBuffer) 
             {
-                health -= clashDmg - rb.linearVelocity.magnitude;
+                enemyData.health -= clashDmg - rb.linearVelocity.magnitude; // damage is shared with the enemy, enemy takes more % of the total damage if the player was moving faster than the enemy
             }
-            if(clashDmg - rbEnemy.linearVelocity.magnitude > 0)
+            if(clashDmg - rbEnemy.linearVelocity.magnitude > damageBuffer)
             {
-                enemyData.health -= clashDmg - rbEnemy.linearVelocity.magnitude;
+                health -= clashDmg - rbEnemy.linearVelocity.magnitude; // damage shared with the player, works the same as the enemy damage
             }
            
             Debug.Log("Enemy Health = " + enemyData.health);
