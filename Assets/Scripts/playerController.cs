@@ -105,15 +105,17 @@ public class playerController : MonoBehaviour
             Rigidbody rbEnemy = other.gameObject.GetComponent<Rigidbody>();
             EnemyBehavior enemyData = other.gameObject.GetComponent<EnemyBehavior>();
 
-            if (rbEnemy.linearVelocity.magnitude > rb.linearVelocity.magnitude)
+            if (rbEnemy.linearVelocity.magnitude < rb.linearVelocity.magnitude)
             {
                 health -= (rbEnemy.linearVelocity.magnitude + rb.linearVelocity.magnitude) * damageTakenMultiplier;
                 Debug.Log("PHealth = " + health);
+                Debug.Log("Enemy Health = " + enemyData.health);
             }
-            else if ((rbEnemy.linearVelocity.magnitude < rb.linearVelocity.magnitude))
+            else if ((rbEnemy.linearVelocity.magnitude > rb.linearVelocity.magnitude))
             {
                 enemyData.health -= (rbEnemy.linearVelocity.magnitude + rb.linearVelocity.magnitude) * damageGivenMultiplier;
                 Debug.Log("Enemy Health = " + enemyData.health);
+                Debug.Log("PHealth = " + health);
             }
             else
             {

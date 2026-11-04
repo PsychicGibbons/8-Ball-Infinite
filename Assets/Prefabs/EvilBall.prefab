@@ -155,6 +155,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBehavior
   health: 100
   detectionRadius: 10
-  jumpSpeed: 2
-  jumpTimeMin: 4
-  jumpTimeMax: 8
+  jumpSpeed: 5
+  jumpTimeMin: 2
+  jumpTimeMax: 4
