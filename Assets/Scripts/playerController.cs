@@ -7,7 +7,7 @@ public class playerController : MonoBehaviour
     private Vector3 mouseReleasePos;
     private Vector2 dragPath;
     private bool dragging = false;
-    private float health = 100f, ballSpeed = 30f; // in future make it so ballspeed is dependent on dragpath.magnitude
+    private float health = 100f, ballSpeed = 30f, clashDmg; // in future make it so ballspeed is dependent on dragpath.magnitude
     private bool dragged = false;
 
     private Rigidbody rb;
@@ -105,22 +105,19 @@ public class playerController : MonoBehaviour
             Rigidbody rbEnemy = other.gameObject.GetComponent<Rigidbody>();
             EnemyBehavior enemyData = other.gameObject.GetComponent<EnemyBehavior>();
 
-            if (rbEnemy.linearVelocity.magnitude < rb.linearVelocity.magnitude)
+            clashDmg = rb.linearVelocity.magnitude + rbEnemy.linearVelocity.magnitude;
+
+            if(clashDmg - rb.linearVelocity.magnitude > 0)
             {
-                health -= (rbEnemy.linearVelocity.magnitude + rb.linearVelocity.magnitude) * damageTakenMultiplier;
-                Debug.Log("PHealth = " + health);
-                Debug.Log("Enemy Health = " + enemyData.health);
+                health -= clashDmg - rb.linearVelocity.magnitude;
             }
-            else if ((rbEnemy.linearVelocity.magnitude > rb.linearVelocity.magnitude))
+            if(clashDmg - rbEnemy.linearVelocity.magnitude > 0)
             {
-                enemyData.health -= (rbEnemy.linearVelocity.magnitude + rb.linearVelocity.magnitude) * damageGivenMultiplier;
-                Debug.Log("Enemy Health = " + enemyData.health);
-                Debug.Log("PHealth = " + health);
+                enemyData.health -= clashDmg - rbEnemy.linearVelocity.magnitude;
             }
-            else
-            {
-                Debug.Log("Collision with no damage set");
-            }
+           
+            Debug.Log("Enemy Health = " + enemyData.health);
+            Debug.Log("PHealth = " + health);
         }
     }
 }

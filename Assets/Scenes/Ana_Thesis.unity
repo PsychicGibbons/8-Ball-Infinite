@@ -547,6 +547,10 @@ PrefabInstance:
       propertyPath: camera
       value: 
       objectReference: {fileID: 1261954659}
+    - target: {fileID: 6479287752407606903, guid: eb222844410aba44fa745cb95e6e1774, type: 3}
+      propertyPath: damageTakenMultiplier
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
