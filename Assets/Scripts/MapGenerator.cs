@@ -24,7 +24,7 @@ public class MapGenerator : MonoBehaviour
         if (currentPieces.Count < 5)
         {
             int listLength = currentPieces.Count;
-            GameObject spawnPos = currentPieces[listLength - 1].transform.GetChild(1).gameObject;
+            GameObject spawnPos = currentPieces[listLength - 1].transform.GetChild(0).gameObject;
             int randPiece = Random.Range(0, setPieces.Length);
             currentPieces.Add(Instantiate(setPieces[randPiece], spawnPos.transform.position, Quaternion.identity));
         }
