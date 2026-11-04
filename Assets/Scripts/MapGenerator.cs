@@ -1,13 +1,32 @@
 using UnityEngine;
-
+using System.Collections;
+using System.Collections.Generic;
 public class MapGenerator : MonoBehaviour
 {
-    public GameObject[] Setpieces;
-    private GameObject lastGeneratedPiece, nextPiece, generatePoint;
+    public GameObject[] setPieces;
+    public static List<GameObject> currentPieces = new List<GameObject>();
 
-    void Generate()
+    void Start()
     {
-        nextPiece = Setpieces[Random.Range(0,Setpieces.Length)];
-        lastGeneratedPiece = Instantiate(nextPiece, generatePoint.transform.position, Quaternion.identity);
+        currentPieces.Clear();
+        currentPieces.Add(Instantiate(setPieces[0], new Vector3(0, 0, -10), Quaternion.identity));
+    }
+    private void Update()
+    {
+        for (int i = 0; i < currentPieces.Count; i++)
+        {
+            if (currentPieces[i] == null)
+            {
+                currentPieces.Remove(currentPieces[i]);
+                i--;
+            }
+        }
+        if (currentPieces.Count < 5)
+        {
+            int listLength = currentPieces.Count;
+            GameObject spawnPos = currentPieces[listLength - 1].transform.GetChild(0).gameObject;
+            int randPiece = Random.Range(0, setPieces.Length);
+            currentPieces.Add(Instantiate(setPieces[randPiece], spawnPos.transform.position, Quaternion.identity));
+        }
     }
 }
