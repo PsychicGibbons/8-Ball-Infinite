@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using UnityEngine;
 
 public class playerController : MonoBehaviour
@@ -15,6 +16,8 @@ public class playerController : MonoBehaviour
     [SerializeField] private float damageTakenMultiplier, damageGivenMultiplier;
     private float cameraPanSpeed = 15f;
     private bool cameraPanning = false;
+    private float minCamDistanceZ = 10f;
+    private float maxCamDistanceZ = -10f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,19 +28,7 @@ public class playerController : MonoBehaviour
     void Update()
     {
         MovementCheck();
-        if (rb.linearVelocity.magnitude < 1.2f)
-        {
-            Vector3 cameraTargetPos = new Vector3(0, 20f, transform.position.z + 8);
-            if (Vector3.Distance(camera.transform.position, cameraTargetPos) > 0.05)
-            {
-                cameraPanning = true;
-                camera.transform.position = Vector3.MoveTowards(camera.transform.position, cameraTargetPos, cameraPanSpeed * Time.deltaTime);
-            }
-            else
-            {
-                cameraPanning = false;
-            }
-        }
+        CameraPan();
     }
     private void FixedUpdate()
     {
@@ -77,7 +68,32 @@ public class playerController : MonoBehaviour
         }
     }
 
-    void Die()
+    private void CameraPan()
+    {
+        if (camera.transform.position.z - transform.position.z > minCamDistanceZ)
+        {
+            camera.transform.position = new Vector3(camera.transform.position.x, camera.transform.position.y, transform.position.z + minCamDistanceZ);
+        }
+        else if (camera.transform.position.z - transform.position.z < maxCamDistanceZ)
+        {
+            camera.transform.position = new Vector3(camera.transform.position.x, camera.transform.position.y, transform.position.z + maxCamDistanceZ);
+        }
+        if (rb.linearVelocity.magnitude < 1.2f)
+        {
+            Vector3 cameraTargetPos = new Vector3(0, 20f, transform.position.z + 8);
+            if (Vector3.Distance(camera.transform.position, cameraTargetPos) > 0.05)
+            {
+                cameraPanning = true;
+                camera.transform.position = Vector3.MoveTowards(camera.transform.position, cameraTargetPos, cameraPanSpeed * Time.deltaTime);
+            }
+            else
+            {
+                cameraPanning = false;
+            }
+        }
+    }
+
+    private void Die()
     {
         Destroy(gameObject);
     }
