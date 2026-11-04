@@ -44,7 +44,12 @@ public class playerController : MonoBehaviour
         if (dragged)
         {
             ApplyMovement();
-        }  
+        }
+
+        if(health <= 0)
+        {
+            Die();
+        }
     }
 
     private void MovementCheck()
@@ -72,12 +77,17 @@ public class playerController : MonoBehaviour
         }
     }
 
-    private void OnColliderEnter(Collider other)
+    void Die()
     {
-        if (other.CompareTag("Enemy"))
+        Destroy(gameObject);
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
         {
-           Rigidbody rbEnemy = other.GetComponent<Rigidbody>();
-           EnemyBehavior enemyData = other.GetComponent<EnemyBehavior>();
+            Rigidbody rbEnemy = other.gameObject.GetComponent<Rigidbody>();
+            EnemyBehavior enemyData = other.gameObject.GetComponent<EnemyBehavior>();
 
             if (rbEnemy.linearVelocity.magnitude > rb.linearVelocity.magnitude)
             {
@@ -87,7 +97,7 @@ public class playerController : MonoBehaviour
             else if ((rbEnemy.linearVelocity.magnitude < rb.linearVelocity.magnitude))
             {
                 enemyData.health -= (rbEnemy.linearVelocity.magnitude + rb.linearVelocity.magnitude) * damageGivenMultiplier;
-                Debug.Log("PHealth = " + enemyData.health);
+                Debug.Log("Enemy Health = " + enemyData.health);
             }
             else
             {

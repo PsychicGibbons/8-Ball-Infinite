@@ -62,9 +62,8 @@ public class EnemyBehavior : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+        //This represents the detection range of the enemy
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);    
     }
-    
-
 }

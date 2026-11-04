@@ -145,7 +145,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 228107746}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: d06a06560d0355143b76b18348fccdc0, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -357,7 +357,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 838792294}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 9ad5378586fa67a4fbaceef0c3bb8fb4, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -437,7 +437,7 @@ Transform:
   m_GameObject: {fileID: 838792294}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1, y: 0.62, z: -5.87}
+  m_LocalPosition: {x: -4.4, y: 0.449, z: 19.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -457,7 +457,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::playerController
   camera: {fileID: 1261954659}
   damageTakenMultiplier: 1
-  damageGivenMultiplier: 1
+  damageGivenMultiplier: 2
 --- !u!54 &838792300
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -467,7 +467,7 @@ Rigidbody:
   m_GameObject: {fileID: 838792294}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 0.5
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -483,7 +483,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 4
   m_CollisionDetection: 0
 --- !u!1 &1261954659
 GameObject:
@@ -572,7 +572,7 @@ Transform:
   m_GameObject: {fileID: 1261954659}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalPosition: {x: 0, y: 20, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -600,15 +600,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 178388736478584046, guid: 442402871e8851c479f8936a52796ae5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.09
+      value: -4.37
       objectReference: {fileID: 0}
     - target: {fileID: 178388736478584046, guid: 442402871e8851c479f8936a52796ae5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.72
+      value: 0.63
       objectReference: {fileID: 0}
     - target: {fileID: 178388736478584046, guid: 442402871e8851c479f8936a52796ae5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.91
+      value: 14.77
       objectReference: {fileID: 0}
     - target: {fileID: 178388736478584046, guid: 442402871e8851c479f8936a52796ae5, type: 3}
       propertyPath: m_LocalRotation.w
