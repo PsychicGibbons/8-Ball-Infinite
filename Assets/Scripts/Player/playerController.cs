@@ -1,8 +1,10 @@
+using System.ComponentModel.Design;
 using System.Net.Http.Headers;
 using UnityEngine;
 
 public class playerController : MonoBehaviour
 {
+    //Assignments
     private Vector3 mouseInputPos;
     private Vector3 mouseReleasePos;
     private Vector2 dragPath;
@@ -11,6 +13,7 @@ public class playerController : MonoBehaviour
     private bool dragged = false;
 
     private Rigidbody rb;
+    private HealthBar playerHealthBar;
 
     public GameObject camera;
     [SerializeField] private float damageTakenMultiplier, damageGivenMultiplier, damageBuffer;
@@ -18,10 +21,12 @@ public class playerController : MonoBehaviour
     private bool cameraPanning = false;
     private float minCamDistanceZ = 10f;
     private float maxCamDistanceZ = -10f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
+    //Functionality
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        playerHealthBar = GetComponentInChildren<HealthBar>();
     }
 
     // Update is called once per frame
@@ -102,8 +107,11 @@ public class playerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
+            //Assignment of Enemy Components from the Enemy we just collided with
             Rigidbody rbEnemy = other.gameObject.GetComponent<Rigidbody>();
             EnemyBehavior enemyData = other.gameObject.GetComponent<EnemyBehavior>();
+            HealthBar enemyHealthBar = other.gameObject.GetComponentInChildren<HealthBar>();
+            
 
             clashDmg = rb.linearVelocity.magnitude + rbEnemy.linearVelocity.magnitude; // The combined speed of the player and the enemy
             //Because the data is gathered after the collision, thanks to Newton the speed of the enemy and player are essentially swapped
@@ -119,9 +127,10 @@ public class playerController : MonoBehaviour
             {
                 health -= clashDmg - rbEnemy.linearVelocity.magnitude; // damage shared with the player, works the same as the enemy damage
             }
-           
-            Debug.Log("Enemy Health = " + enemyData.health);
-            Debug.Log("PHealth = " + health);
+
+            //Update the health bars of Player and Enemy
+            playerHealthBar.UpdateHealthBar(health, 100);
+            enemyHealthBar.UpdateHealthBar(enemyData.health, 100);
         }
     }
 }
