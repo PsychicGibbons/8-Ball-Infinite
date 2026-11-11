@@ -8,15 +8,15 @@ public class playerController : MonoBehaviour
     private Vector3 mouseReleasePos;
     private Vector2 dragPath;
     private bool dragging = false;
-    private float health = 100f, ballSpeed = 6f, clashDmg;
+    private float ballSpeed = 6f, clashDmg;
     public float points;
     private bool dragged = false;
 
     private Rigidbody rb;
-    private HealthBar playerHealthBar;
+    [SerializeField] private HealthBar playerHealthBar;
 
     public GameObject camera;
-    public float damageTakenMultiplier, damageGivenMultiplier, damageBuffer;
+    public float damageTakenMultiplier, damageGivenMultiplier, damageBuffer, health = 100f;
     private float cameraPanSpeed = 15f;
     private bool cameraPanning = false;
     private float minCamDistanceZ = 10f;
@@ -26,7 +26,6 @@ public class playerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        playerHealthBar = GetComponentInChildren<HealthBar>();
     }
 
     // Update is called once per frame
@@ -37,7 +36,7 @@ public class playerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -5f, 0.1f), transform.position.z);
+        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -15f, 0.1f), transform.position.z);
 
         if (dragged)
         {
