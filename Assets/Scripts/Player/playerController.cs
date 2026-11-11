@@ -1,5 +1,4 @@
-using System.ComponentModel.Design;
-using System.Net.Http.Headers;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class playerController : MonoBehaviour
@@ -9,7 +8,7 @@ public class playerController : MonoBehaviour
     private Vector3 mouseReleasePos;
     private Vector2 dragPath;
     private bool dragging = false;
-    private float health = 100f, ballSpeed = 30f, clashDmg; // in future make it so ballspeed is dependent on dragpath.magnitude
+    private float health = 100f, ballSpeed = 6f, clashDmg; // in future make it so ballspeed is dependent on dragpath.magnitude
     private bool dragged = false;
 
     private Rigidbody rb;
@@ -68,8 +67,10 @@ public class playerController : MonoBehaviour
         if (rb.linearVelocity.magnitude < 1f && !cameraPanning)
         {
             dragPath = mouseReleasePos - mouseInputPos;
+            Debug.Log(dragPath.magnitude);
             Vector3 force = new Vector3(dragPath.x, 0, dragPath.y);
-            rb.AddForce(-force.normalized * ballSpeed, ForceMode.Impulse); //negative force so if backwards drag it goes forwards
+            float hitForce = Mathf.Clamp(dragPath.magnitude / 100, 0f, 5f);
+            rb.AddForce(-force.normalized * (ballSpeed * hitForce), ForceMode.Impulse); //negative force so if backwards drag it goes forwards
         }
     }
 
