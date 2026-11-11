@@ -617,10 +617,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4361524543771115391, guid: 442402871e8851c479f8936a52796ae5, type: 3}
-      propertyPath: MoveableUI
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6683959188252239203, guid: 442402871e8851c479f8936a52796ae5, type: 3}
       propertyPath: m_Name
       value: EvilBall
@@ -1865,10 +1861,10 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1261954662}
+  - {fileID: 1774970336}
   - {fileID: 594263402}
   - {fileID: 396694641}
   - {fileID: 7705463074787849243}
   - {fileID: 782423743}
   - {fileID: 111760403}
   - {fileID: 523339245}
-  - {fileID: 1774970336}
