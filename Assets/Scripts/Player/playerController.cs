@@ -8,14 +8,15 @@ public class playerController : MonoBehaviour
     private Vector3 mouseReleasePos;
     private Vector2 dragPath;
     private bool dragging = false;
-    private float health = 100f, ballSpeed = 6f, clashDmg; // in future make it so ballspeed is dependent on dragpath.magnitude
+    private float health = 100f, ballSpeed = 6f, clashDmg;
+    public float points;
     private bool dragged = false;
 
     private Rigidbody rb;
     private HealthBar playerHealthBar;
 
     public GameObject camera;
-    [SerializeField] private float damageTakenMultiplier, damageGivenMultiplier, damageBuffer;
+    public float damageTakenMultiplier, damageGivenMultiplier, damageBuffer;
     private float cameraPanSpeed = 15f;
     private bool cameraPanning = false;
     private float minCamDistanceZ = 10f;
@@ -36,6 +37,8 @@ public class playerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -5f, 0.1f), transform.position.z);
+
         if (dragged)
         {
             ApplyMovement();
@@ -122,11 +125,11 @@ public class playerController : MonoBehaviour
             //buffer stops the moving party from taking damage if hitting the other, if they are almost motionless
             if (clashDmg - rb.linearVelocity.magnitude > damageBuffer) 
             {
-                enemyData.health -= clashDmg - rb.linearVelocity.magnitude; // damage is shared with the enemy, enemy takes more % of the total damage if the player was moving faster than the enemy
+                enemyData.health -= (clashDmg - rb.linearVelocity.magnitude * damageGivenMultiplier); // damage is shared with the enemy, enemy takes more % of the total damage if the player was moving faster than the enemy
             }
             if(clashDmg - rbEnemy.linearVelocity.magnitude > damageBuffer)
             {
-                health -= clashDmg - rbEnemy.linearVelocity.magnitude; // damage shared with the player, works the same as the enemy damage
+                health -= clashDmg - (rbEnemy.linearVelocity.magnitude * damageTakenMultiplier); // damage shared with the player, works the same as the enemy damage
             }
 
             //Update the health bars of Player and Enemy
