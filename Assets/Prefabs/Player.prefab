@@ -599,9 +599,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c37d14f29b24c174aa6f18e4060e61c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::playerController
+  points: 0
   camera: {fileID: 0}
-  damageTakenMultiplier: 2
-  damageGivenMultiplier: 2
+  damageTakenMultiplier: 1
+  damageGivenMultiplier: 1
   damageBuffer: 5
 --- !u!1 &6775094929988847521
 GameObject:

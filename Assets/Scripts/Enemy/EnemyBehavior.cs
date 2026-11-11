@@ -3,8 +3,9 @@ using UnityEngine;
 public class EnemyBehavior : MonoBehaviour
 {
     private GameObject Player;
-    private Rigidbody rb;
+    private Rigidbody rb, PlayerRB;
     private Vector3 jumpVector;
+    private playerController playerController;
     private float jumpTimer;
     public float health = 100;
     [SerializeField] private float detectionRadius, jumpSpeed, jumpTimeMin, jumpTimeMax;
@@ -13,6 +14,8 @@ public class EnemyBehavior : MonoBehaviour
     private void Start()
     {
         Player = FindAnyObjectByType<playerController>().gameObject;
+        playerController = FindAnyObjectByType<playerController>();
+        PlayerRB = Player.GetComponent<Rigidbody>();
         rb = GetComponent<Rigidbody>();
         jumpTimer = Random.Range(jumpTimeMin, jumpTimeMax);
     }
@@ -21,7 +24,7 @@ public class EnemyBehavior : MonoBehaviour
     {
         //Movement and player detection:
 
-        if(Vector3.Distance(Player.transform.position, gameObject.transform.position) < detectionRadius)
+        if(Vector3.Distance(Player.transform.position, gameObject.transform.position) < detectionRadius && PlayerRB.linearVelocity.magnitude < 1)
         {
             Debug.Log("Player Detected");
             playerDetected = true;
@@ -37,7 +40,7 @@ public class EnemyBehavior : MonoBehaviour
             jumpTimer -= Time.deltaTime;
             if (jumpTimer <= 0)
             {
-                Jump();
+                Attack();
             }
         }
 
@@ -48,7 +51,7 @@ public class EnemyBehavior : MonoBehaviour
         }
     }
 
-    void Jump()
+    void Attack()
     {
         jumpVector = new Vector3((gameObject.transform.position - Player.transform.position).x, 0 ,(gameObject.transform.position - Player.transform.position).z);
         rb.AddForce(jumpVector * -jumpSpeed, ForceMode.Impulse);
@@ -57,6 +60,7 @@ public class EnemyBehavior : MonoBehaviour
 
     void Die()
     {
+        playerController.points += 1;
         Destroy(gameObject);
     }
 
