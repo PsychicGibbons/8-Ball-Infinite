@@ -9,11 +9,13 @@ public class playerController : MonoBehaviour
     private Vector2 dragPath;
     private bool dragging = false;
     private float ballSpeed = 6f, clashDmg;
-    public float points;
     private bool dragged = false;
-
     private Rigidbody rb;
+
+    //Drag these into their slots in the editor
     [SerializeField] private HealthBar playerHealthBar;
+    [SerializeField] private PointReader pointHolder;
+    [SerializeField] private LineRenderer guidanceLine;
 
     public GameObject camera;
     public float damageTakenMultiplier, damageGivenMultiplier, damageBuffer, health = 100f;
@@ -46,6 +48,12 @@ public class playerController : MonoBehaviour
         if(health <= 0)
         {
             Die();
+        }
+
+        if (dragging)
+        {
+            Vector2 guide = Input.mousePosition - mouseInputPos;
+            guidanceLine.SetPosition(1, new Vector3(guide.x, 0, guide.y));
         }
     }
 
@@ -118,7 +126,6 @@ public class playerController : MonoBehaviour
 
             clashDmg = rb.linearVelocity.magnitude + rbEnemy.linearVelocity.magnitude; // The combined speed of the player and the enemy
             //Because the data is gathered after the collision, thanks to Newton the speed of the enemy and player are essentially swapped
-
 
             //these if statements are to make sure the damage doesn't go negative and heal the enemy / player,
             //buffer stops the moving party from taking damage if hitting the other, if they are almost motionless

@@ -6,6 +6,7 @@ public class EnemyBehavior : MonoBehaviour
     private Rigidbody rb, PlayerRB;
     private Vector3 jumpVector;
     private playerController playerController;
+    private PointReader pointHolder;
     private float jumpTimer;
     public float health = 100;
     [SerializeField] private float detectionRadius, jumpSpeed, jumpTimeMin, jumpTimeMax;
@@ -60,7 +61,7 @@ public class EnemyBehavior : MonoBehaviour
 
     void Die()
     {
-        playerController.points += 1;
+        pointHolder.UpdatePoints(1);
         Destroy(gameObject);
     }
 
