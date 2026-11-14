@@ -1083,6 +1083,11 @@ RectTransform:
   m_AnchoredPosition: {x: -775, y: 200}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &653084962 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5202406696861464930, guid: eb222844410aba44fa745cb95e6e1774, type: 3}
+  m_PrefabInstance: {fileID: 7705463074787849243}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &782423743
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1487,7 +1492,7 @@ GameObject:
   - component: {fileID: 1648621209}
   - component: {fileID: 1648621208}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: PlayerHealth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1565,6 +1570,17 @@ RectTransform:
   m_AnchoredPosition: {x: -753, y: 474}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1710425018 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6479287752407606903, guid: eb222844410aba44fa745cb95e6e1774, type: 3}
+  m_PrefabInstance: {fileID: 7705463074787849243}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c37d14f29b24c174aa6f18e4060e61c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::playerController
 --- !u!1 &1774970331
 GameObject:
   m_ObjectHideFlags: 0
@@ -1579,6 +1595,7 @@ GameObject:
   - component: {fileID: 1774970333}
   - component: {fileID: 1774970332}
   - component: {fileID: 1774970337}
+  - component: {fileID: 1774970338}
   m_Layer: 5
   m_Name: InfoCanvas
   m_TagString: Untagged
@@ -1704,6 +1721,23 @@ MonoBehaviour:
   DamageButton: {fileID: 815420811}
   ResistanceButton: {fileID: 621586904}
   HealButton: {fileID: 269522113}
+  ButtonDmgText: {fileID: 0}
+  ButtonResText: {fileID: 0}
+  ButtonHealText: {fileID: 0}
+--- !u!114 &1774970338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774970331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df331e5dde06d044089a3f558843b03a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PointReader
+  Controller: {fileID: 1710425018}
+  pointText: {fileID: 0}
 --- !u!1 &1800416897
 GameObject:
   m_ObjectHideFlags: 0
@@ -1787,14 +1821,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 810658010131559082, guid: eb222844410aba44fa745cb95e6e1774, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 810658010131559082, guid: eb222844410aba44fa745cb95e6e1774, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3827273157120270524, guid: eb222844410aba44fa745cb95e6e1774, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1839,14 +1865,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 5595858545016831962, guid: eb222844410aba44fa745cb95e6e1774, type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 1261954661}
     - target: {fileID: 6479287752407606903, guid: eb222844410aba44fa745cb95e6e1774, type: 3}
       propertyPath: camera
       value: 
       objectReference: {fileID: 1261954659}
+    - target: {fileID: 6479287752407606903, guid: eb222844410aba44fa745cb95e6e1774, type: 3}
+      propertyPath: guidanceCue
+      value: 
+      objectReference: {fileID: 653084962}
     - target: {fileID: 6479287752407606903, guid: eb222844410aba44fa745cb95e6e1774, type: 3}
       propertyPath: playerHealthBar
       value: 

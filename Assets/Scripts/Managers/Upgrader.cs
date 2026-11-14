@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,45 +8,50 @@ public class Upgrader : MonoBehaviour
     [SerializeField] private Button DamageButton;
     [SerializeField] private Button ResistanceButton;
     [SerializeField] private Button HealButton;
-    private Text ButtonDmgText, ButtonResText, ButtonHealText;
+    [SerializeField] private TextMeshProUGUI ButtonDmgText, ButtonResText, ButtonHealText;
 
     private float damageCost = 2, resistanceCost = 2, healCost = 3;
     private int damageLvl, resistanceLvl;
 
+    private PointReader pointHolder;
     private playerController playerController;
 
     private void Start()
     {
+        pointHolder = FindAnyObjectByType<PointReader>();
         playerController = FindAnyObjectByType<playerController>();
     }
 
     public void UpgradeDamage()
     {
-        if (playerController.points >= damageCost && damageLvl < 5)
+        if (pointHolder.GetPoints() >= damageCost && damageLvl < 5)
         {
-            playerController.points -= damageCost;
+            pointHolder.UpdatePoints(-damageCost);
             playerController.damageGivenMultiplier += 0.5f;
             damageCost *= 1.5f;
             damageLvl++;
+            ButtonDmgText.text = "Damage Upgrade: \n" + damageCost + " Points";
         }
     }
     public void UpgradeResistance()
     {
-        if (playerController.points >= damageCost && damageLvl < 5)
+        if (pointHolder.GetPoints() >= damageCost && resistanceLvl < 5)
         {
-            playerController.points -= damageCost;
+            pointHolder.UpdatePoints(-damageCost);
             playerController.damageTakenMultiplier -= 0.1f;
             resistanceCost *= 1.5f;
             resistanceLvl++;
+            ButtonResText.text = "Resistance Upgrade: \n" + resistanceCost + " Points";
         }
     }
 
     public void HealPlayer()
     {
-        if(playerController.points >= healCost)
+        if(pointHolder.GetPoints() >= healCost)
         {
             playerController.health = 100;
             healCost *= 1.5f;
+            ButtonHealText.text = "Full Heal: \n" + healCost + " Points";
         }
     }
 }

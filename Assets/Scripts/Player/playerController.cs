@@ -1,3 +1,4 @@
+using System;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -9,11 +10,14 @@ public class playerController : MonoBehaviour
     private Vector2 dragPath;
     private bool dragging = false;
     private float ballSpeed = 6f, clashDmg;
-    public float points;
     private bool dragged = false;
-
     private Rigidbody rb;
+    private Camera cam;
+
+    //Drag these into their slots in the editor
     [SerializeField] private HealthBar playerHealthBar;
+    [SerializeField] private PointReader pointHolder;
+    [SerializeField] private GameObject guidanceCue;
 
     public GameObject camera;
     public float damageTakenMultiplier, damageGivenMultiplier, damageBuffer, health = 100f;
@@ -26,6 +30,7 @@ public class playerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        cam = Camera.main;
     }
 
     // Update is called once per frame
@@ -41,11 +46,20 @@ public class playerController : MonoBehaviour
         if (dragged)
         {
             ApplyMovement();
+            guidanceCue.SetActive(false);
         }
 
         if(health <= 0)
         {
             Die();
+        }
+
+        if (dragging)
+        {
+            guidanceCue.SetActive(true);
+            Vector3 cuePoint = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, 0, Input.mousePosition.y));
+            guidanceCue.transform.position = cuePoint;
+            guidanceCue.transform.LookAt(gameObject.transform, Vector3.up);
         }
     }
 
@@ -118,7 +132,6 @@ public class playerController : MonoBehaviour
 
             clashDmg = rb.linearVelocity.magnitude + rbEnemy.linearVelocity.magnitude; // The combined speed of the player and the enemy
             //Because the data is gathered after the collision, thanks to Newton the speed of the enemy and player are essentially swapped
-
 
             //these if statements are to make sure the damage doesn't go negative and heal the enemy / player,
             //buffer stops the moving party from taking damage if hitting the other, if they are almost motionless
