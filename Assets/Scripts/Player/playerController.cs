@@ -1,3 +1,4 @@
+using System;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -11,11 +12,12 @@ public class playerController : MonoBehaviour
     private float ballSpeed = 6f, clashDmg;
     private bool dragged = false;
     private Rigidbody rb;
+    private Camera cam;
 
     //Drag these into their slots in the editor
     [SerializeField] private HealthBar playerHealthBar;
     [SerializeField] private PointReader pointHolder;
-    [SerializeField] private LineRenderer guidanceLine;
+    [SerializeField] private GameObject guidanceCue;
 
     public GameObject camera;
     public float damageTakenMultiplier, damageGivenMultiplier, damageBuffer, health = 100f;
@@ -28,6 +30,7 @@ public class playerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        cam = Camera.main;
     }
 
     // Update is called once per frame
@@ -43,6 +46,7 @@ public class playerController : MonoBehaviour
         if (dragged)
         {
             ApplyMovement();
+            guidanceCue.SetActive(false);
         }
 
         if(health <= 0)
@@ -52,8 +56,10 @@ public class playerController : MonoBehaviour
 
         if (dragging)
         {
-            Vector2 guide = Input.mousePosition - mouseInputPos;
-            guidanceLine.SetPosition(1, new Vector3(guide.x, 0, guide.y));
+            guidanceCue.SetActive(true);
+            Vector3 cuePoint = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, 0, Input.mousePosition.y));
+            guidanceCue.transform.position = cuePoint;
+            guidanceCue.transform.LookAt(gameObject.transform, Vector3.up);
         }
     }
 
