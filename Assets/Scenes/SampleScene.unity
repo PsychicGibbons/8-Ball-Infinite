@@ -504,7 +504,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapGenerator
   setPieces:
-  - {fileID: 2676371749783144271, guid: 30895549dfe58944584cd9d6e24cd696, type: 3}
+  - {fileID: 7241191667884128125, guid: 1090482563d8a464798e277034bb562e, type: 3}
+  - {fileID: 825902076851660958, guid: 16ad8134b0e732b4a888901de5a25be9, type: 3}
+  - {fileID: 7926156616282593030, guid: 05a0d0ad4d6917f40a368d450ce8e311, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
