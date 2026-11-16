@@ -10,7 +10,7 @@ public class EnemyBehavior : MonoBehaviour
     private float jumpTimer;
     public float health = 100;
     [SerializeField] private float detectionRadius, jumpSpeed, jumpTimeMin, jumpTimeMax;
-    private bool playerDetected;
+    private bool playerDetected, moving;
 
     private void Start()
     {
@@ -24,8 +24,14 @@ public class EnemyBehavior : MonoBehaviour
     private void FixedUpdate()
     {
         //Movement and player detection:
+        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -15, 0.1f), transform.position.z);
+        
+        if(rb.linearVelocity.magnitude <= 0.1f)
+        {
+            moving = false;
+        }
 
-        if(Vector3.Distance(Player.transform.position, gameObject.transform.position) < detectionRadius && PlayerRB.linearVelocity.magnitude < 1)
+        if (Vector3.Distance(Player.transform.position, gameObject.transform.position) < detectionRadius && PlayerRB.linearVelocity.magnitude < 1)
         {
             Debug.Log("Player Detected");
             playerDetected = true;
@@ -36,7 +42,7 @@ public class EnemyBehavior : MonoBehaviour
             playerDetected = false;
         }
 
-        if(playerDetected)
+        if(playerDetected && !moving)
         {
             jumpTimer -= Time.deltaTime;
             if (jumpTimer <= 0)
@@ -54,6 +60,7 @@ public class EnemyBehavior : MonoBehaviour
 
     void Attack()
     {
+        moving = true;
         jumpVector = new Vector3((gameObject.transform.position - Player.transform.position).x, 0 ,(gameObject.transform.position - Player.transform.position).z);
         rb.AddForce(jumpVector * -jumpSpeed, ForceMode.Impulse);
         jumpTimer = Random.Range(jumpTimeMin, jumpTimeMax);
@@ -61,7 +68,7 @@ public class EnemyBehavior : MonoBehaviour
 
     void Die()
     {
-        pointHolder.UpdatePoints(1);
+        pointHolder.UpdatePoints(10);
         Destroy(gameObject);
     }
 

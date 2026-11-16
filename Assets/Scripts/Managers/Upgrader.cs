@@ -10,7 +10,7 @@ public class Upgrader : MonoBehaviour
     [SerializeField] private Button HealButton;
     [SerializeField] private TextMeshProUGUI ButtonDmgText, ButtonResText, ButtonHealText;
 
-    private float damageCost = 2, resistanceCost = 2, healCost = 3;
+    private float damageCost = 20, resistanceCost = 20, healCost = 30;
     private int damageLvl, resistanceLvl;
 
     private PointReader pointHolder;

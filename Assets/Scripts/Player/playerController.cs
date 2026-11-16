@@ -25,6 +25,9 @@ public class playerController : MonoBehaviour
     private bool cameraPanning = false;
     private float minCamDistanceZ = 10f;
     private float maxCamDistanceZ = -10f;
+
+    [SerializeField] private float CueOffsetX;
+    [SerializeField] private float CueOffsetZ;
     
     //Functionality
     void Start()
@@ -57,7 +60,7 @@ public class playerController : MonoBehaviour
         if (dragging)
         {
             guidanceCue.SetActive(true);
-            Vector3 cuePoint = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, 0, Input.mousePosition.y));
+            Vector3 cuePoint = gameObject.transform.position + new Vector3(Mathf.Clamp(Input.mousePosition.x, -1000, 1000) + CueOffsetX, 0, Mathf.Clamp(Input.mousePosition.y, -1000, 1000) + CueOffsetZ) / 100;
             guidanceCue.transform.position = cuePoint;
             guidanceCue.transform.LookAt(gameObject.transform, Vector3.up);
         }
