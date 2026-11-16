@@ -28,7 +28,8 @@ public class playerController : MonoBehaviour
 
     [SerializeField] private float CueOffsetX;
     [SerializeField] private float CueOffsetZ;
-    
+
+    private float playerSpeedThisFrame;
     //Functionality
     void Start()
     {
@@ -44,6 +45,7 @@ public class playerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        playerSpeedThisFrame = rb.linearVelocity.magnitude;
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -15f, 0.1f), transform.position.z);
 
         if (dragged)
@@ -134,18 +136,18 @@ public class playerController : MonoBehaviour
             HealthBar enemyHealthBar = other.gameObject.GetComponentInChildren<HealthBar>();
             
 
-            clashDmg = rb.linearVelocity.magnitude + rbEnemy.linearVelocity.magnitude; // The combined speed of the player and the enemy
+            clashDmg = playerSpeedThisFrame + enemyData.enemySpeedThisFrame; // The combined speed of the player and the enemy
             //Because the data is gathered after the collision, thanks to Newton the speed of the enemy and player are essentially swapped
 
             //these if statements are to make sure the damage doesn't go negative and heal the enemy / player,
             //buffer stops the moving party from taking damage if hitting the other, if they are almost motionless
-            if (clashDmg - rb.linearVelocity.magnitude > damageBuffer) 
+            if (clashDmg - playerSpeedThisFrame > damageBuffer) 
             {
-                enemyData.health -= (clashDmg - rb.linearVelocity.magnitude * damageGivenMultiplier); // damage is shared with the enemy, enemy takes more % of the total damage if the player was moving faster than the enemy
+                health -= (clashDmg - playerSpeedThisFrame * damageGivenMultiplier); // damage is shared with the enemy, enemy takes more % of the total damage if the player was moving faster than the enemy
             }
-            if(clashDmg - rbEnemy.linearVelocity.magnitude > damageBuffer)
+            if(clashDmg - enemyData.enemySpeedThisFrame > damageBuffer)
             {
-                health -= clashDmg - (rbEnemy.linearVelocity.magnitude * damageTakenMultiplier); // damage shared with the player, works the same as the enemy damage
+                enemyData.health -= clashDmg - (enemyData.enemySpeedThisFrame * damageTakenMultiplier); // damage shared with the player, works the same as the enemy damage
             }
 
             //Update the health bars of Player and Enemy

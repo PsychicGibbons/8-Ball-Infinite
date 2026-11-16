@@ -11,6 +11,7 @@ public class EnemyBehavior : MonoBehaviour
     public float health = 100;
     [SerializeField] private float detectionRadius, jumpSpeed, jumpTimeMin, jumpTimeMax;
     private bool playerDetected, moving;
+    public float enemySpeedThisFrame;
 
     private void Start()
     {
@@ -23,8 +24,9 @@ public class EnemyBehavior : MonoBehaviour
 
     private void FixedUpdate()
     {
+        enemySpeedThisFrame = rb.linearVelocity.magnitude;
         //Movement and player detection:
-        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -15, 0.1f), transform.position.z);
+        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -20, 0.1f), transform.position.z);
         
         if(rb.linearVelocity.magnitude <= 0.1f)
         {
