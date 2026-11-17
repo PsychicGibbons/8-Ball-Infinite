@@ -5,6 +5,8 @@ public class MainMenuManager : MonoBehaviour
     private playerController controller;
     [SerializeField] private GameObject mainCam;
     [SerializeField] private GameObject camTarget;
+    [SerializeField] private GameObject[] Buttons;
+    [SerializeField] private GameObject infoCanvas;
     private bool gameStarter;
 
     private void Start()
@@ -14,7 +16,11 @@ public class MainMenuManager : MonoBehaviour
 
     public void StartGame()
     {
-       gameStarter = true;
+        gameStarter = true;
+        foreach (var button in Buttons)
+        {
+            button.SetActive(false);
+        }
     }
     public void closeGame()
     {
@@ -32,7 +38,9 @@ public class MainMenuManager : MonoBehaviour
         }
         else if(Vector3.Distance(camTarget.transform.position, mainCam.transform.position) <= 1)
         {
+            mainCam.transform.rotation = Quaternion.Euler(90, 0, 0);
             controller.enabled = true;
+            infoCanvas.SetActive(true);
             gameObject.SetActive(false);
         }
     }

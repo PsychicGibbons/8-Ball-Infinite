@@ -5,11 +5,11 @@ public class PointReader : MonoBehaviour
 {
     [SerializeField] private playerController Controller;
     [SerializeField] private TextMeshProUGUI pointText;
-    private float points = 0;
+    private float points;
 
     private void Start()
     {
-        UpdatePoints(1000);
+        UpdatePoints(20);
     }
     public void UpdatePoints(float pointsAdded)
     {
