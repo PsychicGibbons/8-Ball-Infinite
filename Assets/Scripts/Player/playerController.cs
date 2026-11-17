@@ -121,7 +121,7 @@ public class playerController : MonoBehaviour
         }
     }
 
-    private void Die()
+    public void Die()
     {
         DeathCanvas.SetActive(true);
         InfoCanvas.SetActive(false);

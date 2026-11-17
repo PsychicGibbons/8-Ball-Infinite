@@ -39,12 +39,10 @@ public class EnemyBehavior : MonoBehaviour
 
         if (Vector3.Distance(Player.transform.position, gameObject.transform.position) < detectionRadius && PlayerRB.linearVelocity.magnitude < 1)
         {
-            Debug.Log("Player Detected");
             playerDetected = true;
         }
         else
         {
-            Debug.Log("Player Out of Range");
             playerDetected = false;
         }
 
