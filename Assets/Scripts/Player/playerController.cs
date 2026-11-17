@@ -91,7 +91,7 @@ public class playerController : MonoBehaviour
     private void ApplyMovement()
     {
         dragged = false;
-        if (rb.linearVelocity.magnitude < 1f && !cameraPanning)
+        if (rb.linearVelocity.z < 1f && !cameraPanning)
         {
             dragPath = mouseReleasePos - mouseInputPos;
             Debug.Log(dragPath.magnitude);
@@ -111,7 +111,7 @@ public class playerController : MonoBehaviour
         {
             camera.transform.position = new Vector3(camera.transform.position.x, camera.transform.position.y, transform.position.z + maxCamDistanceZ);
         }
-        if (rb.linearVelocity.magnitude < 1.2f)
+        if (rb.linearVelocity.z < 1f)
         {
             Vector3 cameraTargetPos = new Vector3(0, 20f, transform.position.z + 8);
             if (Vector3.Distance(camera.transform.position, cameraTargetPos) > 0.05)
