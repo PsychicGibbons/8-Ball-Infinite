@@ -50,7 +50,7 @@ public class playerController : MonoBehaviour
     private void FixedUpdate()
     {
         playerSpeedThisFrame = rb.linearVelocity.magnitude;
-        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -15f, 0.1f), transform.position.z);
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -10f, 10f), Mathf.Clamp(transform.position.y, -15f, 0.1f), transform.position.z);
         guidanceCue.transform.position = transform.position;
 
         if (dragged)

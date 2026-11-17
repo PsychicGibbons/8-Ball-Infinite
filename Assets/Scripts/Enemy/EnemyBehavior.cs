@@ -30,9 +30,9 @@ public class EnemyBehavior : MonoBehaviour
     {
         enemySpeedThisFrame = rb.linearVelocity.magnitude;
         //Movement and player detection:
-        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -20, 0.1f), transform.position.z);
-        
-        if(rb.linearVelocity.magnitude <= 0.1f)
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -10f, 10f), Mathf.Clamp(transform.position.y, -15f, 0.1f), transform.position.z);
+
+        if (rb.linearVelocity.magnitude <= 0.1f)
         {
             moving = false;
         }
