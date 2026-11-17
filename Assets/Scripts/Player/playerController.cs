@@ -95,7 +95,6 @@ public class playerController : MonoBehaviour
         if (rb.linearVelocity.z < 1f && !cameraPanning)
         {
             dragPath = mouseReleasePos - mouseInputPos;
-            Debug.Log(dragPath.magnitude);
             Vector3 force = new Vector3(dragPath.x, 0, dragPath.y);
             float hitForce = Mathf.Clamp(dragPath.magnitude / 100, 0f, 5f);
             rb.AddForce(-force.normalized * (ballSpeed * hitForce), ForceMode.Impulse); //negative force so if backwards drag it goes forwards

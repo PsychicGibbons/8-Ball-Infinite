@@ -29,8 +29,6 @@ public class MainMenuManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-
-        Debug.Log(Vector3.Distance(camTarget.transform.position, mainCam.transform.position));
         if(gameStarter && Vector3.Distance(camTarget.transform.position, mainCam.transform.position) >= 1)
         {
             mainCam.transform.position = Vector3.MoveTowards(mainCam.transform.position, camTarget.transform.position, 1f);
