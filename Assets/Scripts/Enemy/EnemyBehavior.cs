@@ -16,7 +16,10 @@ public class EnemyBehavior : MonoBehaviour
 
     private void Start()
     {
+        transform.parent = null;
+
         Player = FindAnyObjectByType<playerController>().gameObject;
+        pointHolder = FindAnyObjectByType<PointReader>();
         playerController = FindAnyObjectByType<playerController>();
         PlayerRB = Player.GetComponent<Rigidbody>();
         rb = GetComponent<Rigidbody>();

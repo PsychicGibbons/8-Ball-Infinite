@@ -8,6 +8,7 @@ public class Upgrader : MonoBehaviour
     [SerializeField] private Button DamageButton;
     [SerializeField] private Button ResistanceButton;
     [SerializeField] private Button HealButton;
+    [SerializeField] private HealthBar healthSlider;
     [SerializeField] private TextMeshProUGUI ButtonDmgText, ButtonResText, ButtonHealText;
 
     private float damageCost = 20, resistanceCost = 20, healCost = 30;
@@ -24,24 +25,34 @@ public class Upgrader : MonoBehaviour
 
     public void UpgradeDamage()
     {
-        if (pointHolder.GetPoints() >= damageCost && damageLvl < 5)
+        if (pointHolder.GetPoints() >= damageCost && damageLvl < 4)
         {
             pointHolder.UpdatePoints(-damageCost);
-            playerController.damageGivenMultiplier += 0.5f;
-            damageCost *= 1.5f;
+            playerController.damageGivenMultiplier += 1;
+            Debug.Log("Dmg amount: " + playerController.damageGivenMultiplier);
+            damageCost = Mathf.Round(damageCost *= 1.5f);
             damageLvl++;
             ButtonDmgText.text = "Damage Upgrade: \n" + damageCost + " Points";
+            if(damageLvl >= 4)
+            {
+                ButtonDmgText.text = "Damage Upgrade: \n Max";
+            }
         }
     }
     public void UpgradeResistance()
     {
-        if (pointHolder.GetPoints() >= damageCost && resistanceLvl < 5)
+        if (pointHolder.GetPoints() >= damageCost && resistanceLvl < 4)
         {
             pointHolder.UpdatePoints(-damageCost);
             playerController.damageTakenMultiplier -= 0.1f;
-            resistanceCost *= 1.5f;
+            Debug.Log("Res amount: " + playerController.damageTakenMultiplier);
+            resistanceCost = Mathf.Round(resistanceCost *= 1.5f);
             resistanceLvl++;
             ButtonResText.text = "Resistance Upgrade: \n" + resistanceCost + " Points";
+            if (resistanceLvl >= 4)
+            {
+                ButtonResText.text = "Resistance Upgrade: \n Max";
+            }
         }
     }
 
@@ -50,7 +61,8 @@ public class Upgrader : MonoBehaviour
         if(pointHolder.GetPoints() >= healCost)
         {
             playerController.health = 100;
-            healCost *= 1.5f;
+            healthSlider.UpdateHealthBar(100, 100);
+             healCost = Mathf.Round(healCost *= 1.5f);
             ButtonHealText.text = "Full Heal: \n" + healCost + " Points";
         }
     }

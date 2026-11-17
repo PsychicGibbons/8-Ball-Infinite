@@ -13,23 +13,24 @@ public class playerController : MonoBehaviour
     private bool dragged = false;
     private Rigidbody rb;
     private Camera cam;
+    private float cameraPanSpeed = 15f;
+    private bool cameraPanning = false;
+    private float minCamDistanceZ = 10f;
+    private float maxCamDistanceZ = -10f;
+    private float playerSpeedThisFrame;
 
     //Drag these into their slots in the editor
     [SerializeField] private HealthBar playerHealthBar;
     [SerializeField] private PointReader pointHolder;
     [SerializeField] private GameObject guidanceCue;
-
-    public GameObject camera;
-    public float damageTakenMultiplier, damageGivenMultiplier, damageBuffer, health = 100f;
-    private float cameraPanSpeed = 15f;
-    private bool cameraPanning = false;
-    private float minCamDistanceZ = 10f;
-    private float maxCamDistanceZ = -10f;
-
+    [SerializeField] private GameObject DeathCanvas;
+    [SerializeField] private GameObject InfoCanvas;
     [SerializeField] private float CueOffsetX;
     [SerializeField] private float CueOffsetZ;
+    public GameObject camera;
+    public float damageTakenMultiplier, damageGivenMultiplier, damageBuffer, health = 100f;
 
-    private float playerSpeedThisFrame;
+    
     //Functionality
     void Start()
     {
@@ -122,7 +123,9 @@ public class playerController : MonoBehaviour
 
     private void Die()
     {
-        Destroy(gameObject);
+        DeathCanvas.SetActive(true);
+        InfoCanvas.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     void OnCollisionEnter(Collision other)
@@ -142,11 +145,11 @@ public class playerController : MonoBehaviour
             //buffer stops the moving party from taking damage if hitting the other, if they are almost motionless
             if (clashDmg - playerSpeedThisFrame > damageBuffer && enemyData.moving) 
             {
-                health -= (clashDmg - playerSpeedThisFrame * damageGivenMultiplier); // damage is shared with the enemy, enemy takes more % of the total damage if the player was moving faster than the enemy
+                health -= (clashDmg - playerSpeedThisFrame * damageTakenMultiplier); // damage is shared with the enemy, enemy takes more % of the total damage if the player was moving faster than the enemy
             }
             if(clashDmg - enemyData.enemySpeedThisFrame > damageBuffer)
             {
-                enemyData.health -= clashDmg - (enemyData.enemySpeedThisFrame * damageTakenMultiplier); // damage shared with the player, works the same as the enemy damage
+                enemyData.health -= clashDmg * damageGivenMultiplier - (enemyData.enemySpeedThisFrame); // damage shared with the player, works the same as the enemy damage
             }
 
             //Update the health bars of Player and Enemy

@@ -82,6 +82,7 @@ GameObject:
   - component: {fileID: 4412827533371682673}
   - component: {fileID: 418840650389093702}
   - component: {fileID: 7357139522579341823}
+  - component: {fileID: 875918260612801338}
   m_Layer: 0
   m_Name: Doom
   m_TagString: Untagged
@@ -182,6 +183,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &875918260612801338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2839208510439590140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4df161b90a25574ca4b2f7a5c211760, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KillBox
 --- !u!1 &4733675340460311330
 GameObject:
   m_ObjectHideFlags: 0
