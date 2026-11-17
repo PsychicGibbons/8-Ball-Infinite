@@ -62,10 +62,9 @@ public class playerController : MonoBehaviour
         if (dragging)
         {
             guidanceCue.SetActive(true);
-            //Vector3 cuePoint = gameObject.transform.position + new Vector3(Mathf.Clamp(Input.mousePosition.x, -1000, 1000) + CueOffsetX, 0, Mathf.Clamp(Input.mousePosition.y, -1000, 1000) + CueOffsetZ) / 100;
-            Vector3 cuePoint = gameObject.transform.position + cam.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 cuePoint = gameObject.transform.position + new Vector3 (cam.ScreenToViewportPoint(Input.mousePosition).x * 40 + CueOffsetX, 0, cam.ScreenToViewportPoint(Input.mousePosition).y * 20 + CueOffsetZ);
             guidanceCue.transform.position = cuePoint;
-            guidanceCue.transform.LookAt(gameObject.transform, Vector3.up);
+            //guidanceCue.transform.LookAt(gameObject.transform, Vector3.up);
         }
     }
 
@@ -141,7 +140,7 @@ public class playerController : MonoBehaviour
 
             //these if statements are to make sure the damage doesn't go negative and heal the enemy / player,
             //buffer stops the moving party from taking damage if hitting the other, if they are almost motionless
-            if (clashDmg - playerSpeedThisFrame > damageBuffer) 
+            if (clashDmg - playerSpeedThisFrame > damageBuffer && enemyData.moving) 
             {
                 health -= (clashDmg - playerSpeedThisFrame * damageGivenMultiplier); // damage is shared with the enemy, enemy takes more % of the total damage if the player was moving faster than the enemy
             }

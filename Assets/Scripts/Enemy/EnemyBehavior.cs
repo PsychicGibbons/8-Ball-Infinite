@@ -10,7 +10,8 @@ public class EnemyBehavior : MonoBehaviour
     private float jumpTimer;
     public float health = 100;
     [SerializeField] private float detectionRadius, jumpSpeed, jumpTimeMin, jumpTimeMax;
-    private bool playerDetected, moving;
+    private bool playerDetected;
+    public bool moving;
     public float enemySpeedThisFrame;
 
     private void Start()
