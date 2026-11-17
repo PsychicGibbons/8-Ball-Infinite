@@ -41,9 +41,9 @@ public class Upgrader : MonoBehaviour
     }
     public void UpgradeResistance()
     {
-        if (pointHolder.GetPoints() >= damageCost && resistanceLvl < 4)
+        if (pointHolder.GetPoints() >= resistanceCost && resistanceLvl < 4)
         {
-            pointHolder.UpdatePoints(-damageCost);
+            pointHolder.UpdatePoints(-resistanceCost);
             playerController.damageTakenMultiplier -= 0.1f;
             Debug.Log("Res amount: " + playerController.damageTakenMultiplier);
             resistanceCost = Mathf.Round(resistanceCost *= 1.5f);
