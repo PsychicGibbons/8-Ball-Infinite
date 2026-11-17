@@ -1,4 +1,5 @@
 using System;
+using System.Linq.Expressions;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -23,6 +24,7 @@ public class playerController : MonoBehaviour
     [SerializeField] private HealthBar playerHealthBar;
     [SerializeField] private PointReader pointHolder;
     [SerializeField] private GameObject guidanceCue;
+    [SerializeField] private GameObject guidanceCueVisual;
     [SerializeField] private GameObject DeathCanvas;
     [SerializeField] private GameObject InfoCanvas;
     [SerializeField] private float CueOffsetX;
@@ -48,11 +50,11 @@ public class playerController : MonoBehaviour
     {
         playerSpeedThisFrame = rb.linearVelocity.magnitude;
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -15f, 0.1f), transform.position.z);
+        guidanceCue.transform.position = transform.position;
 
         if (dragged)
         {
             ApplyMovement();
-            guidanceCue.SetActive(false);
         }
 
         if(health <= 0)
@@ -62,10 +64,11 @@ public class playerController : MonoBehaviour
 
         if (dragging)
         {
-            guidanceCue.SetActive(true);
-            Vector3 cuePoint = gameObject.transform.position + new Vector3 (cam.ScreenToViewportPoint(Input.mousePosition).x * 40 + CueOffsetX, 0, cam.ScreenToViewportPoint(Input.mousePosition).y * 20 + CueOffsetZ);
-            guidanceCue.transform.position = cuePoint;
-            //guidanceCue.transform.LookAt(gameObject.transform, Vector3.up);
+            float angleAboutY = Mathf.Atan2((mouseInputPos.x - Input.mousePosition.x), (mouseInputPos.y - Input.mousePosition.y));  //use atan to find angle with the adjacent (x2-x1) and opposite (y2-y1), this returns in radians
+            guidanceCue.transform.rotation = Quaternion.Euler(0f, Mathf.Rad2Deg * angleAboutY, 0f);  //turn radians into degrees and set guidance cue to that angle around the y axis
+            Vector2 pull = Input.mousePosition - mouseInputPos;
+            float pullDistance = Mathf.Clamp(pull.magnitude / 100, 0f, 5f);
+            guidanceCueVisual.transform.localPosition = new Vector3(0,0,-1.1f-(pullDistance/10));
         }
     }
 
@@ -73,11 +76,13 @@ public class playerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !dragging)
         {
+            guidanceCue.SetActive(true);
             dragging = true;
             mouseInputPos = Input.mousePosition;
         }
         if (Input.GetMouseButtonUp(0) && dragging)
         {
+            guidanceCue.SetActive(false);
             dragging = false;
             mouseReleasePos = Input.mousePosition;
             dragged = true;
